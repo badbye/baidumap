@@ -7,6 +7,7 @@ R interface of baidu map api，just like ggmap but get map from baidu api instea
 ```
 library(devtools)
 install_github('badbye/baidumap')
+library(baidumap)
 ```
 
 ### getLocation
