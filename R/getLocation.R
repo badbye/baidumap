@@ -33,13 +33,17 @@ map_ak = 'wwZFCIqxIqjRGMVsZ0qgTh7D'
 #' ## formatted
 #' location = getLocation(lon[, 1], lon[, 2], formatted = T) 
 #' }
-getLocation = function(lon, lat, output='json', formatted = F, pois=0){
+getLocation = function(lon, lat, output='json', formatted = F, pois=0){    
+    ##### URL
 	url_head = paste0("http://api.map.baidu.com/geocoder/v2/?ak=", map_ak, "&location=")
 	url_tail = paste0("&output=", output, "&", "pois=", pois, collapse='')
 	url = paste0(url_head, lat, ",", lon, url_tail)
-	result = getURL(url)
+	
+    ##### result
+    result = getURL(url)
 	names(result) = paste0("lon=", lon, ";lat=", lat)
-    ## if formatted, return a nice result but loss some information
+    
+    ##### if formatted, return a nice result but loss some information
     if (formatted){
         if (output == 'json'){
             result = gsub('.*"formatted_address":"(.*?)".*', '\\1', result)
@@ -47,6 +51,8 @@ getLocation = function(lon, lat, output='json', formatted = F, pois=0){
             result = gsub(".*<formatted_address>(.*?)</formatted_address>.*", '\\1', result)
         }
     }
+    
+    #### final
 	return(result)
 }
 
@@ -73,10 +79,20 @@ getLocation = function(lon, lat, output='json', formatted = F, pois=0){
 #' ## vectorization, return a matrix
 #' getCoordinate(c('北京大学', '清华大学'), formatted = T)
 #' }
+#' 
+#' http://api.map.baidu.com/geocoder/v2/?address=百度大厦&output=json&ak=E4805d16520de693a3fe707cdc962045&callback=showLocation
+#' 
 getCoordinate = function(address, city=NULL, output='json', formatted = F){
-    url_head = paste0("http://api.map.baidu.com/geocoder/v2/?ak=", map_ak, "&")
-    url = paste0(url_head, "output=", output, "&address=", address)
-    if (!is.null(city)) url = paste0(url, "&city=", city)
+    ### address
+    if (grepl(' ', address)) warning('address should have balnk character!')
+    address = gsub(' ', '', address)
+    
+    ### url
+    url_head = paste0('http://api.map.baidu.com/geocoder/v2/?address=', address)
+    if (!is.null(city)) url_head = paste0(url_head, "&city=", city)
+    url = paste0(url_head, "output=", output, "&ak=", map_ak)
+
+    ### result
     result = getURL(url)
     names(result) = address
     
@@ -99,5 +115,7 @@ getCoordinate = function(address, city=NULL, output='json', formatted = F){
             result = trans(result)
         }
     }
+    
+    ### final
     return(result)
 }
