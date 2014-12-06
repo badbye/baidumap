@@ -58,4 +58,4 @@ getLocation = function(location, output='json', formatted = F, pois=0){
     
     #### final
 	return(result)
-}
+}   
