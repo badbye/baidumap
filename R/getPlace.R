@@ -46,7 +46,7 @@ getPlace = function(place = NULL, city = '北京'){
                                        ifelse(is.null(y$location$lat), NA, y$location$lat),
                                        ifelse(is.null(y$location$lng), NA, y$location$lng),
                                        ifelse(is.null(y$telephone), NA, y$telephone)))
-        info = as.data.frame(t(info))
+        info = as.data.frame(t(info), stringsAsFactors = FALSE)
         if (nrow(info) > 0 & ncol(info) > 0) {
             colnames(info) = c('name', 'address', 'lat', 'lon', 'telephone')
         }
@@ -77,5 +77,7 @@ getPlace = function(place = NULL, city = '北京'){
         }
         cat('Done!', '\n')
     }
+    address$lat = as.numeric(address$lat)
+    address$lon = as.numeric(address$lon)
     return(address)
 }
