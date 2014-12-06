@@ -5,6 +5,7 @@
 #' @param to 5 or 6. 5：bd09ll(百度经纬度坐标); 6：bd09mc(百度米制经纬度坐标);
 #' @importFrom rjson fromJSON
 #' @importFrom RCurl getURL
+#' @export geoconv
 geoconv = function(geocode, from=3, to=5){
     if (class(geocode) %in% c('data.frame', 'matrix')){
         geocode = as.matrix(geocode)
