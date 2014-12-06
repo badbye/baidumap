@@ -1,6 +1,6 @@
 Package: baidumap
 Title: A package for spatial visualization with Baidu
-Version: 0.1
+Version: 0.2
 Authors: yalei Du <yaleidu@163.com>
 Description: Just like ggmap, but get map from baidu instead of google or openstreet
 Depends:
@@ -9,6 +9,7 @@ Imports:
     ggmap,
     RgoogleMaps,
     png,
-    RCurl
+    RCurl,
+    rjson
 License: GPL-2
 LazyData: true
