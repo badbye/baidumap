@@ -2,7 +2,7 @@
 #' 
 #' Take in coordiantes and return the location
 #' 
-#' @param location a vector contains longtitude and latitude of the center of the map, or a character refers to the address
+#' @param location a vector a or matrix contains longtitude and latitude of the center of the map, or a character refers to the address
 #' @param width width of the map
 #' @param height height of the map
 #' @param zoom map zoom, an integer from 3 (continent) to 21 (building), default value 10 (city)
@@ -22,7 +22,7 @@
 #' p <- getBaiduMap(c(116.39565, 39.92999))
 #' ggmap(p)
 #' 
-#' p <- getBaiduMap('北京') # the same
+#' p <- getBaiduMap('beijing') # the same
 #' ggmap(p)
 #' 
 #' ## black-and-white
@@ -39,7 +39,7 @@ getBaiduMap = function(location, width=400, height = 400, zoom=10, scale=2, colo
     } else if (length(location == 2)){
         location_cor = location
     } else{
-        stop('错误的地址！')
+        stop('Wrong address!')
     }
     lon = location_cor[1];
     lat = location_cor[2];
@@ -81,7 +81,10 @@ getBaiduMap = function(location, width=400, height = 400, zoom=10, scale=2, colo
         list(lat = lat, lon = lon, zoom = zoom),
         width/2 + 0.5,
         height/2 - 0.5
-    )  
+    )
+    
+#     ll = as.numeric(rev(geoconv(rev(ll))))
+#     ur = as.numeric(rev(geoconv(rev(ur))))
     attr(map, "bb") <- data.frame(
         ll.lat = ll[1], ll.lon = ll[2],
         ur.lat = ur[1], ur.lon = ur[2]

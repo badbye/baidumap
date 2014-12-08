@@ -10,19 +10,17 @@
 #' 
 #' \dontrun{ 
 #' ## json output
-#' getCoordinate('北京大学')
+#' getCoordinate('beijingdaxue')
 #' 
 #' ## xml output
-#' getCoordinate('北京大学', output='xml')
+#' getCoordinate('beijingdaxue', output='xml')
 #' 
 #' ## formatted
-#' getCoordinate('北京大学', formatted = T)
+#' getCoordinate('beijingdaxue', formatted = T)
 #' 
 #' ## vectorization, return a matrix
-#' getCoordinate(c('北京大学', '清华大学'), formatted = T)
+#' getCoordinate(c('beijingdaxue', 'qinghuadaxue'), formatted = T)
 #' }
-#' 
-#' http://api.map.baidu.com/geocoder/v2/?address=百度大厦&output=json&ak=E4805d16520de693a3fe707cdc962045&callback=showLocation
 #' 
 getCoordinate = function(address, city=NULL, output='json', formatted = F){
     ### address
