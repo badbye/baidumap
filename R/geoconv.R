@@ -22,7 +22,6 @@ geoconv = function(geocode, from=3, to=5){
     url_header = 'http://api.map.baidu.com/geoconv/v1/?coords='
     url = paste0(url_header, code_url, '&from=', from, '&to=', to, '&ak=', map_ak, 
                  collapse='')
-    url
     result = fromJSON(getURL(url))
     result_matrix = sapply(result$result, function(t) c(t$x, t$y))
     t(result_matrix)
