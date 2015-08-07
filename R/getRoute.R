@@ -18,7 +18,7 @@
 #' @examples
 #' \dontrun{
 #' bjMap = getBaiduMap('北京', color='bw')
-#' df = getRoute('首都国际机场', '北京南苑机场')
+#' df = getRoute('首都国际机场', '北京南苑机场', region = '北京')
 #' ggmap(bjMap) + geom_path(data = df, aes(lon, lat), alpha = 0.5, col = 'red')
 #' }
 #' 
@@ -29,11 +29,16 @@ getRoute = function(...){
 }
 
 getRouteXML = function(origin, destination, mode='driving', 
-                       region = '北京', origin_region = NA, 
+                       region = NA, origin_region = NA, 
                        destination_region = NA, 
                        tactics = 11, 
                        coord_type = 'bd09ll',
                        output = 'xml'){
+    if (is.na(region)){
+        if (is.na(origin_region) & is.na(destination_region)) {
+            stop('Argument "region" is not setted!')
+        }
+    }
     get_city = function(x) ifelse(is.na(x), region, x)
     origin_region = get_city(origin_region)
     destination_region = get_city(destination_region)
