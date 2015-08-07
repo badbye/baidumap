@@ -12,7 +12,7 @@
 #' @param coord_type 'bd09ll'(default), 'gcj02'(which Google map and Soso map are using), 'wgs84' for GPS devices.
 #' @return a data frame contains longtitude and latitude of the route.
 #' @export getRoute
-#' @importFrom RCurl getURL
+#' @importFrom RCurl getForm
 #' @importFrom XML htmlTreeParse　xpathSApply
 #' 
 #' @examples
