@@ -29,7 +29,7 @@ getRoute = function(...){
 }
 
 getRouteXML = function(origin, destination, mode='driving', 
-                       region = NA, origin_region = NA, 
+                       region = '北京', origin_region = NA, 
                        destination_region = NA, 
                        tactics = 11, 
                        coord_type = 'bd09ll',
