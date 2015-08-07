@@ -13,7 +13,7 @@
 #' @return a data frame contains longtitude and latitude of the route.
 #' @export getRoute
 #' @importFrom RCurl getForm
-#' @importFrom XML htmlTreeParse　xpathSApply
+#' @importFrom XML htmlTreeParse　xpathSApply xmlValue
 #' 
 #' @examples
 #' \dontrun{
