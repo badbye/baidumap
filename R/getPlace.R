@@ -28,16 +28,17 @@ url_character = function(x){
 #' ## Mcdonald's in shanghai
 #' sh_mcdonald = getPlace('麦当劳', '上海')
 #' }
-getPlace = function(place = NULL, city = '北京'){
+getPlace = function(place=NULL, city='北京', page_size=20, 
+                    pages=Inf, scope=1, verbose=TRUE){
     ### character
     place = url_character(place)
     city = url_character(city)
     
     ### url
-    url_head = paste0('http://api.map.baidu.com/place/v2/search?ak=', map_ak)
+    url_head = 'http://api.map.baidu.com/place/v2/search?ak='
     url = function(page) {
-        paste0(url_head, '&output=json&query=', place, "&page_size=20&",
-               '&page_num=', page, '&scope=1&region=', city)
+        sprintf('%s%s&output=json&query=%s&page_size=%s&&page_num=%s&scope=%s&region=%s',
+                url_head, map_ak, place, page_size, page, scope, city)
     }
     
     ### formate the result   
@@ -55,7 +56,7 @@ getPlace = function(place = NULL, city = '北京'){
     }
     
     ### get result
-    getResult = function(page_num = 1){
+    getResult = function(page_num = 0){
         result = getURL(url(page_num), .encoding = 'UTF8')
         result = fromJSON(result)
         total = result$total
@@ -63,18 +64,20 @@ getPlace = function(place = NULL, city = '北京'){
         return(list(total = total, result = result_formate))
     }
     
-    ###
-    result = getResult(1)
+    ### start to scraping
+    result = getResult(0)
     address = result$result
-    total_page = ceiling(result$total / 20)
-#     cat('Get',  result$total, 'records,', total_page, 'page.', '\n')
-    cat('    Getting ', 1, 'th page', '\n')
+    total_page = min(ceiling(result$total / 20), pages)
+    if (verbose) {
+        cat('Get',  result$total, 'records,', total_page, 'page.', '\n')
+        cat('    Getting ', 0, 'th page', '\n')
+    }
     if (total_page > 1){
-        for (i in 2:total_page){
-            cat('    Getting ', i, 'th page', '\n')
+        for (i in 1:total_page){
+            if (verbose) cat('    Getting ', i, 'th page', '\n')
             address_i = getResult(i)$result
-            if (nrow(address_i) < 20) break;
             address = rbind(address, address_i)
+            if (nrow(address_i) < 20) break;
         }
         cat('Done!', '\n')
     }
