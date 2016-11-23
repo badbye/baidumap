@@ -44,7 +44,7 @@ getLocation = function(location, output='json', formatted = F, pois=0){
 	url = paste0(url_head, lat, ",", lon, url_tail)
 	
     ##### result
-    result = getURL(url)
+	result = tryCatch(getURL(url),error = function(e) {getURL(url, timeout = 200)})
 	names(result) = paste0("lon=", lon, ";lat=", lat)
     
     ##### if formatted, return a nice result but loss some information

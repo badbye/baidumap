@@ -33,7 +33,7 @@ getCoordinate = function(address, city=NULL, output='json', formatted = F){
     url = paste0(url_head, "&output=", output, "&ak=", map_ak)
     
     ### result
-    result = getURL(url)
+    result = tryCatch(getURL(url),error = function(e) {getURL(url, timeout = 200)})
     names(result) = address
     
     ### transform data from json/xml
