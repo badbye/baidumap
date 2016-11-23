@@ -24,8 +24,8 @@
 #' 
 getCoordinate = function(address, city=NULL, output='json', formatted = F){
     ### address
-    if (grepl(' ', address)) warning('address should have balnk character!')
-    address = gsub(' ', '', address)
+    if (grepl(' |#', address)) warning('address should have blank character!')
+    address = gsub(' |#', '', address)
     
     ### url
     url_head = paste0('http://api.map.baidu.com/geocoder/v2/?address=', address)
