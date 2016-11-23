@@ -13,6 +13,8 @@ Imports:
     png,
     RCurl,
     rjson,
-    XML
+    XML,
+    parallel
 License: GPL-2
 LazyData: true
+RoxygenNote: 5.0.1
