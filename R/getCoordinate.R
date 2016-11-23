@@ -1,28 +1,4 @@
-#' Get coordiante from address
-#' Take in address and return the coordinate
-#' @param address address
-#' @param city the city of the address, optional
-#' @param output should be "json" or "xml", the type of the result
-#' @param formatted logical value, return the coordinates or the original results
-#' @return A vector contains the  corresponding coordiante. If "formatted=TRUE", return the numeric coordinates, otherwise return json or xml type result, depents on the argument "output". If the length of address is larger than 1, the result is a matrix.
-#' @export getCoordinate
-#' @examples
-#' 
-#' \dontrun{ 
-#' ## json output
-#' getCoordinate('beijingdaxue')
-#' 
-#' ## xml output
-#' getCoordinate('beijingdaxue', output='xml')
-#' 
-#' ## formatted
-#' getCoordinate('beijingdaxue', formatted = T)
-#' 
-#' ## vectorization, return a matrix
-#' getCoordinate(c('beijingdaxue', 'qinghuadaxue'), formatted = T)
-#' }
-#' 
-getCoordinate = function(address, city=NULL, output='json', formatted = F){
+getCoordinate.core = function(address, city=NULL, output='json', formatted = F){
     ### address
     if (grepl(' |#', address)) warning('address should have blank character!')
     address = gsub(' |#', '', address)
@@ -58,4 +34,43 @@ getCoordinate = function(address, city=NULL, output='json', formatted = F){
     
     ### final
     return(result)
+}
+#' Get coordiante from address
+#' Take in address and return the coordinate
+#' @param address address
+#' @param city the city of the address, optional
+#' @param output should be "json" or "xml", the type of the result
+#' @param formatted logical value, return the coordinates or the original results
+#' @param limit integer value.If the length of address exceeded limit, function will run in parallel
+#' @return A vector contains the  corresponding coordiante. If "formatted=TRUE", return the numeric coordinates, otherwise return json or xml type result, depents on the argument "output". If the length of address is larger than 1, the result is a matrix.
+#' @export getCoordinate
+#' @examples
+#' \dontrun{ 
+#' ## json output
+#' getCoordinate('beijingdaxue')
+#' 
+#' ## xml output
+#' getCoordinate('beijingdaxue', output='xml')
+#' 
+#' ## formatted
+#' getCoordinate('beijingdaxue', formatted = T)
+#' 
+#' ## vectorization, return a matrix
+#' getCoordinate(c('beijingdaxue', 'qinghuadaxue'), formatted = T)
+#' }
+getCoordinate=function(address, city=NULL, output='json', formatted = F,limit=600){
+    if(length(address)<limit){
+        res<-getCoordinate.core(address, city, output , formatted)
+    }else if(require(parallel)){
+        cl <- makeCluster(getOption("cl.cores", detectCores()*0.8))
+        res<-parLapply(cl,X = address,fun = function(x){
+            getCoordinate.core(x, city, output , formatted)
+        })
+        res<-do.call('rbind',res)
+        stopCluster(cl)
+    }else{
+        warning('can not run in parallel mode without package parallel')
+        res<-getCoordinate.core(address, city, output , formatted)
+    }
+    res
 }
