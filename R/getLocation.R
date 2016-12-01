@@ -41,7 +41,7 @@ getLocation.core = function(location, output='json', formatted = F, pois=0){
 #' 
 #' \dontrun{  
 #' ## get one location 
-#' location_one = getLocation(118.12845, 24.57742)
+#' location_one = getLocation(c(118.12845, 24.57742))
 #' 
 #' ## vectorization
 #' loc = matrix(c(117.93780, 24.55730, 117.93291, 24.57745, 117.23530, 24.64210, 117.05890, 24.74860), byrow=T, ncol=2)
@@ -64,7 +64,7 @@ getLocation.core = function(location, output='json', formatted = F, pois=0){
 #' 
 getLocation=
     function (location, output = "json", formatted = F, pois = 0,limit=600) {
-        if(nrow(location)<limit){
+        if(NROW(location)<limit){
             res<-getLocation.core(location, output, formatted , pois)
         }else if(require(parallel)){
             cl <- makeCluster(getOption("cl.cores", detectCores()*0.8))

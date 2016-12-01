@@ -47,16 +47,16 @@ getCoordinate.core = function(address, city=NULL, output='json', formatted = F){
 #' @examples
 #' \dontrun{ 
 #' ## json output
-#' getCoordinate('beijingdaxue')
+#' getCoordinate('北京大学')
 #' 
 #' ## xml output
-#' getCoordinate('beijingdaxue', output='xml')
+#' getCoordinate('北京大学', output='xml')
 #' 
 #' ## formatted
-#' getCoordinate('beijingdaxue', formatted = T)
+#' getCoordinate('北京大学', formatted = T)
 #' 
 #' ## vectorization, return a matrix
-#' getCoordinate(c('beijingdaxue', 'qinghuadaxue'), formatted = T)
+#' getCoordinate(c('北京大学', '清华大学'), formatted = T)
 #' }
 getCoordinate=function(address, city=NULL, output='json', formatted = F,limit=600){
     if(length(address)<limit){
