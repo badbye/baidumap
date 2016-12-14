@@ -30,7 +30,7 @@ Take in coordiantes and return the location
 
 \dontrun{  
 ## get one location 
-location_one = getLocation(118.12845, 24.57742)
+location_one = getLocation(c(118.12845, 24.57742))
 
 ## vectorization
 loc = matrix(c(117.93780, 24.55730, 117.93291, 24.57745, 117.23530, 24.64210, 117.05890, 24.74860), byrow=T, ncol=2)
