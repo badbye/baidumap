@@ -9,7 +9,7 @@
 #' @export geoconv
 geoconv = function(geocode, from=3, to=5, map_ak=''){
     if (map_ak == '' && is.null(getOption('baidumap.key'))){
-        stop('Please register AK by ')
+        stop(Notification)
     }else{
         map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
     }

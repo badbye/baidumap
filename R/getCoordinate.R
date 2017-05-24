@@ -1,11 +1,6 @@
 getCoordinate.core = function(address, city=NULL, 
                               output='json', formatted = F,
                               map_ak = ''){
-    if (map_ak == '' && is.null(getOption('baidumap.key'))){
-        stop('Please register AK by ')
-    }else{
-        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
-    }
     ### address
     if (any(grepl(' |#', address))) warning('address should not have blank character!')
     address = gsub(' |#', '', address)
@@ -65,19 +60,24 @@ getCoordinate.core = function(address, city=NULL,
 #' ## vectorization, return a matrix
 #' getCoordinate(c('北京大学', '清华大学'), formatted = T)
 #' }
-getCoordinate=function(address, city=NULL, output='json', formatted = F,limit=600){
+getCoordinate=function(address, city=NULL, output='json', formatted = F,limit=600, map_ak=''){
+    if (map_ak == '' && is.null(getOption('baidumap.key'))){
+        stop(Notification)
+    }else{
+        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+    }
     if(length(address)<limit){
-        res<-getCoordinate.core(address, city, output , formatted)
+        res<-getCoordinate.core(address, city, output , formatted, map_ak)
     }else if(require(parallel)){
         cl <- makeCluster(getOption("cl.cores", detectCores()*0.8))
         res<-parLapply(cl,X = address,fun = function(x){
-            getCoordinate.core(x, city, output , formatted)
+            getCoordinate.core(x, city, output , formatted, map_ak)
         })
         res<-do.call('rbind',res)
         stopCluster(cl)
     }else{
         warning('can not run in parallel mode without package parallel')
-        res<-getCoordinate.core(address, city, output , formatted)
+        res<-getCoordinate.core(address, city, output , formatted, map_ak)
     }
     res
 }

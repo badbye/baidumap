@@ -64,7 +64,7 @@ getLocation.core = function(location, output='json', formatted = F,
 getLocation = function (location, output = "json", formatted = F, 
                         pois = 0, limit=600, map_ak = '') {
         if (map_ak == '' && is.null(getOption('baidumap.key'))){
-            stop('Please register AK by ')
+            stop(Notification)
         }else{
             map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
         }
@@ -81,4 +81,4 @@ getLocation = function (location, output = "json", formatted = F,
             res<-getLocation.core(location, output, formatted , pois)
         }
         res
-    }
+}

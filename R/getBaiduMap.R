@@ -32,7 +32,14 @@
 #' ## do not print messages
 #' p <- getBaiduMap(messaging = F)
 #' }
-getBaiduMap = function(location, width=400, height = 400, zoom=10, scale=2, color = "color", messaging = TRUE){
+getBaiduMap = function(location, width=400, height = 400, zoom=10, 
+                       scale=2, color = "color", messaging = TRUE,
+                       map_ak = ''){
+    if (map_ak == '' && is.null(getOption('baidumap.key'))){
+        stop(Notification)
+    }else{
+        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+    }
     ## location
     if (is.character(location) && length(location) == 1){
         location_cor = getCoordinate(location, formatted=T)
