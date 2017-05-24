@@ -7,7 +7,7 @@ getCoordinate.core = function(address, city=NULL,
         map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
     }
     ### address
-    if (grepl(' |#', address)) warning('address should have blank character!')
+    if (any(grepl(' |#', address))) warning('address should not have blank character!')
     address = gsub(' |#', '', address)
     
     ### url

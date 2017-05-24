@@ -23,13 +23,13 @@ Get location from coordinates data.
 ```
 lon = matrix(c(117.93780, 24.55730, 117.93291, 24.57745, 117.23530, 24.64210, 117.05890, 24.74860), byrow=T, ncol=2)
 ### json 
-location_json = getLocation(lon[, 1], lon[, 2], output='json')
+location_json = getLocation(lon[1,], output='json')
 
 ### xml
-location_xml = getLocation(lon[, 1], lon[, 2], output='xml')
+location_xml = getLocation(lon[1, ], output='xml')
 
 ## formatted
-location = getLocation(lon[, 1], lon[, 2], formatted = T) 
+location = getLocation(lon[1, ], formatted = T) 
 ```
 
 ### GetCoordinate
@@ -45,7 +45,7 @@ getCoordinate(c('北京大学', '清华大学'), formatted = T) # matrix
 ### getBaiduMap
 
 ```
-p <- getBaiduMap(lon=116.354431, lat=39.942333)
+p <- getBaiduMap(c(116.354431, lat=39.942333))
 library(ggmap)
 ggmap(p)
 ```
