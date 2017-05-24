@@ -33,7 +33,13 @@ getRouteXML = function(origin, destination, mode='driving',
                        destination_region = NA, 
                        tactics = 11, 
                        coord_type = 'bd09ll',
-                       output = 'xml'){
+                       output = 'xml',
+                       map_ak=''){
+    if (map_ak == '' && is.null(getOption('baidumap.key'))){
+        stop('Please register AK by ')
+    }else{
+        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+    }
     if (is.na(region)){
         if (is.na(origin_region) & is.na(destination_region)) {
             stop('Argument "region" is not setted!')

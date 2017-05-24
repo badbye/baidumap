@@ -1,4 +1,11 @@
-getCoordinate.core = function(address, city=NULL, output='json', formatted = F){
+getCoordinate.core = function(address, city=NULL, 
+                              output='json', formatted = F,
+                              map_ak = ''){
+    if (map_ak == '' && is.null(getOption('baidumap.key'))){
+        stop('Please register AK by ')
+    }else{
+        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+    }
     ### address
     if (grepl(' |#', address)) warning('address should have blank character!')
     address = gsub(' |#', '', address)

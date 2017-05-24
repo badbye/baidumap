@@ -1,0 +1,25 @@
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+cache:
+  packages: yes
+  directories:
+    - $HOME/cache
+r_packages: 
+  - devtools
+  - testthat
+  - ggmap
+  - RgoogleMaps
+  - png
+  - RCurl
+  - rjson
+  - XML
+
+before_script:
+  - Rscript -e "if (!require('webshot')) devtools::install_github('wch/webshot')"
+  
+# run tests
+script:
+  - Rscript -e "testthat::test_dir('tests')"

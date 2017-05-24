@@ -1,6 +1,6 @@
 Package: baidumap
 Title: A package for spatial visualization with Baidu
-Version: 0.2
+Version: 0.2.1
 Encoding: UTF-8
 Author: yalei Du <yaleidu@163.com>
 Maintainer: yalei Du <yaleidu@163.com>

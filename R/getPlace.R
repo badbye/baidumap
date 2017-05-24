@@ -29,7 +29,12 @@ url_character = function(x){
 #' sh_mcdonald = getPlace('麦当劳', '上海')
 #' }
 getPlace = function(place=NULL, city='北京', page_size=20, 
-                    pages=Inf, scope=1, verbose=TRUE){
+                    pages=Inf, scope=1, verbose=TRUE, map_ak=''){
+    if (map_ak == '' && is.null(getOption('baidumap.key'))){
+        stop('Please register AK by ')
+    }else{
+        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+    }
     ### character
     place = url_character(place)
     city = url_character(city)

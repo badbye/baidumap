@@ -3,12 +3,20 @@ baidumap
 
 R interface of baidu map api，just like ggmap but get map from baidu api instead of google or openstreet.
 
-### install
+## Installation
 ```
 library(devtools)
 install_github('badbye/baidumap')
-library(baidumap)
 ```
+
+## Usage
+
+Apply an application from [lbsyun.baidu.com](http://lbsyun.baidu.com/apiconsole/key). Then register you key here.
+```
+library(baidumap)
+options(baidumap.key = 'XXX fill your key here XXX')
+```
+
 
 ### getLocation
 Get location from coordinates data.

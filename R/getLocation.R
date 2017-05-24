@@ -1,6 +1,5 @@
-map_ak = 'wwZFCIqxIqjRGMVsZ0qgTh7D'
-
-getLocation.core = function(location, output='json', formatted = F, pois=0){    
+getLocation.core = function(location, output='json', formatted = F, 
+                            pois=0, map_ak){    
     ##### URL
     if (!class(location) %in% c('matrix', 'data.frame')){
         location = matrix(location, ncol=2, byrow=T)
@@ -62,10 +61,15 @@ getLocation.core = function(location, output='json', formatted = F, pois=0){
 #' location = getLocation(loc, formatted = T) 
 #' }
 #' 
-getLocation=
-    function (location, output = "json", formatted = F, pois = 0,limit=600) {
+getLocation = function (location, output = "json", formatted = F, 
+                        pois = 0, limit=600, map_ak = '') {
+        if (map_ak == '' && is.null(getOption('baidumap.key'))){
+            stop('Please register AK by ')
+        }else{
+            map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+        }
         if(NROW(location)<limit){
-            res<-getLocation.core(location, output, formatted , pois)
+            res<-getLocation.core(location, output, formatted , pois, map_ak = map_ak)
         }else if(require(parallel)){
             cl <- makeCluster(getOption("cl.cores", detectCores()*0.8))
             res<-parApply(cl,X = location,MARGIN = 1,FUN = function(x){

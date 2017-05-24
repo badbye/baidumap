@@ -7,7 +7,12 @@
 #' @importFrom rjson fromJSON
 #' @importFrom RCurl getURL
 #' @export geoconv
-geoconv = function(geocode, from=3, to=5){
+geoconv = function(geocode, from=3, to=5, map_ak=''){
+    if (map_ak == '' && is.null(getOption('baidumap.key'))){
+        stop('Please register AK by ')
+    }else{
+        map_ak = ifelse(map_ak == '', getOption('baidumap.key'), map_ak)
+    }
     if (class(geocode) %in% c('data.frame', 'matrix')){
         geocode = as.matrix(geocode)
         code = apply(geocode, 1, function(x) paste0(x[1], ',', x[2]))
