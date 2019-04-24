@@ -18,7 +18,7 @@ options(baidumap.key = 'XXX fill your key here XXX')
 ```
 
 
-### getLocation
+### Function: getLocation
 Get location from coordinates data.
 ```
 lon = matrix(c(117.93780, 24.55730, 117.93291, 24.57745, 117.23530, 24.64210, 117.05890, 24.74860), byrow=T, ncol=2)
@@ -32,7 +32,7 @@ location_xml = getLocation(lon[1, ], output='xml')
 location = getLocation(lon[1, ], formatted = T) 
 ```
 
-### GetCoordinate
+### Function: GetCoordinate
 Given a address, return the corresponding coordinates
 ```
 getCoordinate('北京大学') # json
@@ -42,10 +42,27 @@ getCoordinate(c('北京大学', '清华大学'), formatted = T) # matrix
 ```
 
 
-### getBaiduMap
+### Function: getBaiduMap
 
 ```
-p <- getBaiduMap(c(116.354431, lat=39.942333))
+p <- getBaiduMap(c(lon=116.354431, lat=39.942333))
 library(ggmap)
 ggmap(p)
+```
+
+### Function: geoconv
+
+Convert your coordinate data to BaiduMap's coordinate system. Document: http://lbsyun.baidu.com/index.php?title=webapi/guide/changeposition
+
+## Example
+
+```
+library(baidumap)
+library(ggplot2)
+options(baidumap.key='xxx')
+ruc_map = getBaiduMap('中国人民大学', zoom=12)
+ruc_coordinate = getCoordinate('中国人民大学', formatted = T)
+ruc_coordinate = data.frame(t(ruc_coordinate))
+ggmap::ggmap(ruc_map) +
+  geom_point(aes(x=longtitude, y=latitude), data=ruc_coordinate, col='red', size=5)
 ```
